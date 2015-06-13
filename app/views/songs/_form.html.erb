@@ -1,0 +1,44 @@
+<%= form_for @song do |f| %>
+
+<% if @song.errors.any? %>
+<ul>
+  <% @song.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<%= f.label :name %>
+<%= f.text_field :name %>
+
+<%= f.label :artist %>
+<%= f.text_field :artist %>
+
+<%= f.label :audio_url %>
+<%= f.text_field :audio_url %>
+
+<%= f.label :image_url %>
+<%= f.text_field :image_url %>
+
+<% ims = IntensitiesMoodsSong.where(song: @song.id) %>
+
+<%= f.label :mood %>
+<% Mood.all.each do |mood| %>
+  <%= label_tag "mood_id_#{mood.id}".to_sym, mood.name %>
+  <%= radio_button_tag :mood_id, mood.id, checked = (ims.count > 0 && ims[0].mood_id == mood.id) %>
+<% end %>
+
+<%= f.label :intensity %>
+<% Intensity.all.each do |intensity| %>
+  <%= label_tag "intensity_id_#{intensity.id}".to_sym, intensity.name %>
+  <%= radio_button_tag :intensity_id, intensity.id, checked = (ims.count > 0 && ims[0].intensity_id == intensity.id) %>
+<% end %><br>
+
+<%= f.label :copyright %>
+<%= f.select :copyright, [['None', 'None'], ['Licensed', 'Licensed'], ['Open', 'Open'], ['InHouse', 'InHouse']] %>
+
+
+<%= f.submit %>
+
+<% end %>
+

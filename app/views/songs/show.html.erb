@@ -1,0 +1,35 @@
+<h1>Song!</h1>
+
+<%= link_to 'Back to Songs', songs_url %>
+
+<h2>ID</h2>
+<p><%= @song.id %></p>
+
+<h2>Name</h2>
+<p><%= @song.name %></p>
+
+<h2>Artist</h2>
+<p><%= @song.artist %></p>
+
+<h2>Audio URL</h2>
+<p><%= @song.audio_url %></p>
+
+<h2>Image URL</h2>
+<p><%= @song.image_url %></p>
+
+<h2>Copyright</h2>
+<p><%= @song.copyright %></p>
+
+<h2>Moods and Intensities</h2>
+
+<% ims = IntensitiesMoodsSong.where(song: @song.id) %>
+
+<% ims.each do |obj| %>
+  <p><%= Mood.find(obj.mood).name %></p>
+  <p><%= Intensity.find(obj.intensity). name %></p>
+<% end %>
+
+<%= link_to 'Back to Songs', songs_url %>
+
+
+
